@@ -1,6 +1,6 @@
 # sh curl-scripts/index.sh
 
-curl "http://localhost/2111/blogs/${ID}" \
+curl "http://localhost/4741/blogs/${ID}" \
 --include \
 --request PATCH \
 --header "Content-Type: application/json" \
