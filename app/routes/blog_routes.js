@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 // require restaurant model
-const Blog = require('./../models/blog')
-const handle404 = require('./../lib/customErrors')
+const Blog = require('../models/blog')
+const handle404 = require('../../lib/custom_errors')
 
 // INDEX
 // GET /restaurants
