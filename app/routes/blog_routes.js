@@ -3,6 +3,8 @@ const passport = require('passport')
 const router = express.Router()
 const requireToken = passport.authenticate('bearer', { session: false })
 const removeBlanks = require('../../lib/remove_blank_fields')
+const customErrors = require('../../lib/custom_errors')
+const requireOwnership = customErrors.requireOwnership
 
 // require restaurant model
 const Blog = require('../models/blog')
@@ -54,23 +56,36 @@ router.post('/blogs', requireToken, (req, res, next) => {
 // UPDATE
 // PATCH /blogs/:id
 router.patch('/blogs/:id', requireToken, removeBlanks, (req, res, next) => {
-  const id = req.params.id
-  const blogData = req.body.blog
-  Blog.findById(id)
+  Blog.findById(req.params.id)
     .then(handle404)
-    .then(blog => blog.updateOne(blogData))
+    .then(blog => {
+    // pass the `req` object and the Mongoose record to `requireOwnership`
+    // it will throw an error if the current user isn't the owner
+      requireOwnership(req, blog)
+
+      // pass the result of Mongoose's `.update` to the next `.then`
+      return blog.updateOne(req.body.blog)
+    })
+  // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
+  // if an error occurs, pass it to the handler
     .catch(next)
 })
 
 // DESTROY
 // DELETE /blogs/:id
-router.delete('/blogs/:id', (req, res, next) => {
-  const id = req.params.id
-  Blog.findById(id)
+router.delete('/blogs/:id', requireToken, (req, res, next) => {
+  Blog.findById(req.params.id)
     .then(handle404)
-    .then(blog => blog.remove())
+    .then(blog => {
+      // throw an error if current user doesn't own `blog`
+      requireOwnership(req, blog)
+      // delete the blog ONLY IF the above didn't throw
+      blog.deleteOne()
+    })
+    // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
+    // if an error occurs, pass it to the handler
     .catch(next)
 })
 
