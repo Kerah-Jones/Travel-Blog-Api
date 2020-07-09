@@ -6,7 +6,7 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 const customErrors = require('../../lib/custom_errors')
 const requireOwnership = customErrors.requireOwnership
 
-// require restaurant model
+// require blog model
 const Blog = require('../models/blog')
 const handle404 = require('../../lib/custom_errors')
 

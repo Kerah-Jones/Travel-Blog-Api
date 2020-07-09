@@ -13,6 +13,9 @@ const errorHandler = require('./lib/error_handler')
 const replaceToken = require('./lib/replace_token')
 const requestLogger = require('./lib/request_logger')
 
+// review routes
+const reviewRoutes = require('./app/routes/reviewRoutes')
+const reviewNestedRoutes = require('./app/routes/reviewNestedRoutes')
 // require database configuration logic
 // `db` will be the actual Mongo URI as a string
 const db = require('./config/db')
@@ -71,6 +74,10 @@ app.use(blogRoutes)
 // note that this comes after the route middlewares, because it needs to be
 // passed any error messages from them
 app.use(errorHandler)
+
+// review route files
+app.use(reviewRoutes)
+app.use(reviewNestedRoutes)
 
 // run API on designated port (4741 in this case)
 app.listen(port, () => {
