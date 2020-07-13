@@ -41,6 +41,8 @@ router.get('/blogs/:id', (req, res, next) => {
 router.post('/blogs', requireToken, (req, res, next) => {
   // set owner of new example to be current user
   req.body.blog.owner = req.user.id
+  console.log(req.user)
+  console.log(req.body.blog)
 
   Blog.create(req.body.blog)
     // respond to succesful `create` with status 201 and JSON of new "example"
