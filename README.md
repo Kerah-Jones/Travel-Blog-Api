@@ -5,7 +5,7 @@ In this application, I created a social media blogging website for solo women tr
 This respository is the back-end application, while the following link is the front-end api application: https://github.com/Kerah-Jones/Travel-Blog-Client. 
 
 Both application were created from scratch. This is phase one of this application which give the users the opportunity to create a blog and post it to the board for others to view, however, only the owner of that post can update and delete. Users are also about to write a review/comment for a blog post. Phase two will consist of the ability to ,update review, delete review, and like a post. 
-This is the link to my live site https://kerah-jones.github.io/travel-blog-client.
+This is the link to my live site https://kerah-jones.github.io/Travel-Blog-Client.
 
 I had a great time building the back-end of this application. 
 I knew in my user models I wanted the api to recongnize the user by the email and password, and I also wanted to give the ability to change password.
